@@ -21,13 +21,14 @@ import { ref, computed } from "vue";
 import { ICell } from "../models/ICell";
 import Cell from "./Cell.vue";
 
-const props = defineProps<{ pool: Array<Array<ICell>> }>();
+const props = defineProps<{ pool: Array<Array<ICell>>; player: string }>();
+const emit = defineEmits(["playerChange"]);
 
 const gamePool = ref(props.pool);
 
 function setColor(event: ICell) {
-  console.log(`на меня нажали x-${event.x}, y-${event.y}`);
-  gamePool.value[event.y][event.x].color = "red";
+  gamePool.value[event.y][event.x].color = props.player;
+  emit("playerChange");
 }
 
 const count = ref(0);

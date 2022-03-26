@@ -3,11 +3,10 @@
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 
 import PlayingFieldVue from "./components/PlayingField.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 function genStartPool(collom: number = 7, line: number = 6) {
   // let startArr: Array<Array<Object>> = [[{}]];
   let startArr = new Array(line);
-
   for (let lineCell = 0; lineCell < startArr.length; lineCell++) {
     let lineArr = new Array(collom);
     for (let collomCell = 0; collomCell < collom; collomCell++) {
@@ -18,13 +17,24 @@ function genStartPool(collom: number = 7, line: number = 6) {
   return startArr;
 }
 const pool = genStartPool();
-pool[5][0].color = "red";
-pool[4][0].color = "yellow";
+
+const isPlayerRed = ref<boolean>(true);
+const player = ref("red");
+function playerChange() {
+  isPlayerRed.value = !isPlayerRed.value;
+  isPlayerRed.value ? (player.value = "red") : (player.value = "yellow");
+}
 </script>
 
 <template>
   <div class="wrapper">
-    <PlayingFieldVue :pool="pool" />
+    <div>Сейчас ходит : {{ player }}</div>
+
+    <PlayingFieldVue
+      :pool="pool"
+      :player="player"
+      @player-change="playerChange"
+    />
   </div>
 </template>
 
