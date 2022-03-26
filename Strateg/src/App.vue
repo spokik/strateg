@@ -3,7 +3,7 @@
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 
 import PlayingFieldVue from "./components/PlayingField.vue";
-
+import { ref } from "vue";
 function genStartPool(collom: number = 7, line: number = 6) {
   // let startArr: Array<Array<Object>> = [[{}]];
   let startArr = new Array(line);
@@ -11,7 +11,6 @@ function genStartPool(collom: number = 7, line: number = 6) {
   for (let lineCell = 0; lineCell < startArr.length; lineCell++) {
     let lineArr = new Array(collom);
     for (let collomCell = 0; collomCell < collom; collomCell++) {
-      // startArr[lineCell][collomCell] = { x: collomCell, y: lineCell };
       lineArr[collomCell] = { x: collomCell, y: lineCell, color: "white" };
     }
     startArr[lineCell] = lineArr;

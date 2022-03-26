@@ -1,22 +1,34 @@
 <template>
   <div class="field">
-    <div v-for="(line, indexLine) in pool" :key="indexLine" class="field__line">
+    <div
+      v-for="(line, indexLine) in gamePool"
+      :key="indexLine"
+      class="field__line"
+    >
       <Cell
         v-for="(cell, indexCell) in line"
         :key="indexCell"
         class="field__circle"
         :cell="cell"
+        @active-cell="setColor"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { ICell } from "../models/ICell";
 import Cell from "./Cell.vue";
 
-defineProps<{ pool: Array<Array<ICell>> }>();
+const props = defineProps<{ pool: Array<Array<ICell>> }>();
+
+const gamePool = ref(props.pool);
+
+function setColor(event: ICell) {
+  console.log(`на меня нажали x-${event.x}, y-${event.y}`);
+  gamePool.value[event.y][event.x].color = "red";
+}
 
 const count = ref(0);
 </script>

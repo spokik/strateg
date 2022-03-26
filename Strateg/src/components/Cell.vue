@@ -1,14 +1,17 @@
 <template>
-  <div class="cell"></div>
+  <div class="cell" @click="activeCell"></div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { ICell } from "../models/ICell";
-
+const emit = defineEmits(["activeCell"]);
 const props = defineProps<{ cell: ICell }>();
-const color = props.cell.color;
-const count = ref(0);
+const color = computed(() => props.cell.color);
+
+function activeCell() {
+  emit("activeCell", props.cell);
+}
 </script>
 
 <style lang="scss" scoped>
