@@ -20,6 +20,7 @@ function genStartPool(collom: number = 7, line: number = 6) {
 }
 const pool = genStartPool();
 pool[5][0].color = "red";
+pool[4][0].color = "yellow";
 </script>
 
 <template>
