@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import PlayingFieldVue from "./components/PlayingField.vue";
 import { ref, computed } from "vue";
-
+import { Pool } from "./models/ICell";
 //генерирует стартовое поле
-function genStartPool(collom: number = 7, line: number = 6) {
+function genStartPool(collom: number = 7, line: number = 6): Pool {
   let startArr = new Array(line);
   for (let lineCell = 0; lineCell < startArr.length; lineCell++) {
     let lineArr = new Array(collom);
@@ -15,8 +15,9 @@ function genStartPool(collom: number = 7, line: number = 6) {
   return startArr;
 }
 const wins = ref({ red: 0, yellow: 0 });
+const gameCounter = ref(0);
 let pool = ref(genStartPool());
-const clearPool = genStartPool();
+let clearPool = ref(false);
 const isPlayerRed = ref<boolean>(true);
 const player = ref("red");
 function playerChange() {
@@ -26,11 +27,16 @@ function playerChange() {
 const endGame = (event: string) => {
   if (event === "red") {
     wins.value.red++;
-    isPlayerRed.value = true;
+    isPlayerRed.value = false;
+    playerChange();
   } else {
     wins.value.yellow++;
-    isPlayerRed.value = false;
+    isPlayerRed.value = true;
+    playerChange();
   }
+  gameCounter.value++;
+  clearPool.value = !clearPool;
+  pool.value = genStartPool();
 };
 </script>
 
@@ -38,11 +44,11 @@ const endGame = (event: string) => {
   <div class="wrapper">
     Победы: Красный: {{ wins.red }} Желтый: {{ wins.yellow }}
     <div>Сейчас ходит : {{ player }}</div>
-
+    <button @click="endGame('red')">Сбрость игру</button>
     <PlayingFieldVue
       :pool="pool"
       :player="player"
-      :clear-pool="clearPool"
+      :clear-pool="gameCounter"
       @player-change="playerChange"
       @end-game="endGame"
     />

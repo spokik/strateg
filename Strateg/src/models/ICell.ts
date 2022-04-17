@@ -3,3 +3,5 @@ export interface ICell {
   y: number;
   color: string;
 }
+
+export type Pool = Array<Array<ICell>>;
