@@ -1,7 +1,3 @@
-<template>
-  <div class="cell" @click="activeCell"></div>
-</template>
-
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { ICell } from "../models/ICell";
@@ -13,6 +9,10 @@ function activeCell() {
   emit("activeCell", props.cell);
 }
 </script>
+
+<template>
+  <div class="cell" @click="activeCell"></div>
+</template>
 
 <style lang="scss" scoped>
 @import "@/assets/css/scss.scss";

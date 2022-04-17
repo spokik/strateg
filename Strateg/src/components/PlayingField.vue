@@ -1,3 +1,30 @@
+<script setup lang="ts">
+import { ref, computed } from "vue";
+import { ICell } from "../models/ICell";
+import Cell from "./Cell.vue";
+
+const props = defineProps<{ pool: Array<Array<ICell>>; player: string }>();
+const emit = defineEmits(["playerChange"]);
+
+const gamePool = ref(props.pool);
+
+function setColor(event: ICell) {
+  let i = 5;
+  let stoped = true;
+  while (i >= 0 && stoped) {
+    if (gamePool.value[i][event.x].color === "white") {
+      console.log("123");
+      gamePool.value[i][event.x].color = props.player;
+      stoped = false;
+      emit("playerChange");
+    }
+    i--;
+  }
+}
+
+const count = ref(0);
+</script>
+
 <template>
   <div class="field">
     <div
@@ -15,24 +42,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref, computed } from "vue";
-import { ICell } from "../models/ICell";
-import Cell from "./Cell.vue";
-
-const props = defineProps<{ pool: Array<Array<ICell>>; player: string }>();
-const emit = defineEmits(["playerChange"]);
-
-const gamePool = ref(props.pool);
-
-function setColor(event: ICell) {
-  gamePool.value[event.y][event.x].color = props.player;
-  emit("playerChange");
-}
-
-const count = ref(0);
-</script>
 
 <style lang="scss" scoped>
 @import "@/assets/css/scss.scss";

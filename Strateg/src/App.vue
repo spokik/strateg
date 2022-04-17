@@ -1,11 +1,9 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-
 import PlayingFieldVue from "./components/PlayingField.vue";
 import { ref, computed } from "vue";
+
+//генерирует стартовое поле
 function genStartPool(collom: number = 7, line: number = 6) {
-  // let startArr: Array<Array<Object>> = [[{}]];
   let startArr = new Array(line);
   for (let lineCell = 0; lineCell < startArr.length; lineCell++) {
     let lineArr = new Array(collom);
@@ -16,8 +14,8 @@ function genStartPool(collom: number = 7, line: number = 6) {
   }
   return startArr;
 }
-const pool = genStartPool();
 
+const pool = genStartPool();
 const isPlayerRed = ref<boolean>(true);
 const player = ref("red");
 function playerChange() {
@@ -41,6 +39,7 @@ function playerChange() {
 <style lang="scss" scoped>
 .wrapper {
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: center;
 }
