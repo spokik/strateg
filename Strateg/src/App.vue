@@ -24,13 +24,15 @@ function playerChange() {
   isPlayerRed.value = !isPlayerRed.value;
   isPlayerRed.value ? (player.value = "red") : (player.value = "yellow");
 }
-const endGame = (event: string) => {
-  if (event === "red") {
+const endGame = (event: [string, string, Array<Array<number>>]) => {
+  if (event[0] === "red") {
     wins.value.red++;
+    console.log(`победил ${event[0]} по ${event[1]}`);
     isPlayerRed.value = false;
     playerChange();
   } else {
     wins.value.yellow++;
+    console.log(`победил ${event[0]} по ${event[1]}`);
     isPlayerRed.value = true;
     playerChange();
   }
@@ -44,7 +46,7 @@ const endGame = (event: string) => {
   <div class="wrapper">
     Победы: Красный: {{ wins.red }} Желтый: {{ wins.yellow }}
     <div>Сейчас ходит : {{ player }}</div>
-    <button @click="endGame('red')">Сбрость игру</button>
+    <button @click="">Сбрость игру</button>
     <PlayingFieldVue
       :pool="pool"
       :player="player"

@@ -40,7 +40,16 @@ const horizontal = (gamePool: Pool) => {
         gamePool[y][x + 3].color
       );
       if (result) {
-        return result;
+        return [
+          result,
+          "horizontal",
+          [
+            [x, y],
+            [x + 1, y],
+            [x + 2, y],
+            [x + 3, y],
+          ],
+        ];
       }
     }
   }
@@ -55,7 +64,16 @@ const vertical = (gamePool: Pool) => {
         gamePool[y + 3][x].color
       );
       if (result) {
-        return result;
+        return [
+          result,
+          "vertical",
+          [
+            [x, y],
+            [x, y + 1],
+            [x, y + 2],
+            [x, y + 3],
+          ],
+        ];
       }
     }
   }
@@ -70,7 +88,16 @@ const diagonallyX = (gamePool: Pool) => {
         gamePool[y + 3][x - 3].color
       );
       if (result) {
-        return result;
+        return [
+          result,
+          "vertical",
+          [
+            [x, y],
+            [x - 1, y + 1],
+            [x - 2, y + 2],
+            [x - 3, y + 3],
+          ],
+        ];
       }
     }
   }
@@ -85,23 +112,28 @@ const diagonallyY = (gamePool: Pool) => {
         gamePool[y + 3][x + 3].color
       );
       if (result) {
-        return result;
+        return [
+          result,
+          "vertical",
+          [
+            [x, y],
+            [x + 1, y + 1],
+            [x + 2, y + 2],
+            [x + 4, y + 3],
+          ],
+        ];
       }
     }
   }
 };
 const checkPool = (gamePool: Pool) => {
   if (horizontal(gamePool)) {
-    console.log(`победил ${horizontal(gamePool)} horizontal`);
     emit("endGame", horizontal(gamePool));
   } else if (vertical(gamePool)) {
-    console.log(`победил ${vertical(gamePool)} по vertical`);
     emit("endGame", vertical(gamePool));
   } else if (diagonallyX(gamePool)) {
-    console.log(`победил ${diagonallyX(gamePool)} по diagonallyX`);
     emit("endGame", diagonallyX(gamePool));
   } else if (diagonallyY(gamePool)) {
-    console.log(`победил ${diagonallyY(gamePool)} по diagonallyY`);
     emit("endGame", diagonallyY(gamePool));
   }
 };
