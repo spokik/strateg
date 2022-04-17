@@ -12,8 +12,8 @@ function activeCell() {
 
 <template>
   <div class="cell" @click="activeCell">
-    x - {{ cell.x }},<br />
-    y - {{ cell.y }}
+    <!-- x - {{ cell.x }},<br />
+    y - {{ cell.y }} -->
   </div>
 </template>
 

@@ -15,7 +15,8 @@ function genStartPool(collom: number = 7, line: number = 6) {
   return startArr;
 }
 const wins = ref({ red: 0, yellow: 0 });
-const pool = ref(genStartPool());
+let pool = ref(genStartPool());
+const clearPool = genStartPool();
 const isPlayerRed = ref<boolean>(true);
 const player = ref("red");
 function playerChange() {
@@ -25,12 +26,11 @@ function playerChange() {
 const endGame = (event: string) => {
   if (event === "red") {
     wins.value.red++;
-    player.value = "red";
+    isPlayerRed.value = true;
   } else {
     wins.value.yellow++;
-    player.value = "yellow";
+    isPlayerRed.value = false;
   }
-  pool.value = genStartPool();
 };
 </script>
 
@@ -42,6 +42,7 @@ const endGame = (event: string) => {
     <PlayingFieldVue
       :pool="pool"
       :player="player"
+      :clear-pool="clearPool"
       @player-change="playerChange"
       @end-game="endGame"
     />
