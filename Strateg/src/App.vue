@@ -25,8 +25,10 @@ function playerChange() {
 const endGame = (event: string) => {
   if (event === "red") {
     wins.value.red++;
+    player.value = "red";
   } else {
     wins.value.yellow++;
+    player.value = "yellow";
   }
   pool.value = genStartPool();
 };
