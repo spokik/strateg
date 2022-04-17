@@ -17,15 +17,17 @@ const isAllSameColor = (el0, el1, el2, el3) => {
     }
   }
 };
+
 const gamePool = ref(props.pool);
+
 const horizontal = (gamePool) => {
-  for (let i = 0; i <= 5; i++) {
+  for (let y = 0; y <= 5; y++) {
     for (let x = 0; x < 4; x++) {
       let result = isAllSameColor(
-        gamePool[i][x].color,
-        gamePool[i][x + 1].color,
-        gamePool[i][x + 2].color,
-        gamePool[i][x + 3].color
+        gamePool[y][x].color,
+        gamePool[y][x + 1].color,
+        gamePool[y][x + 2].color,
+        gamePool[y][x + 3].color
       );
       if (result) {
         return result;
@@ -33,12 +35,31 @@ const horizontal = (gamePool) => {
     }
   }
 };
-const vertical = (gamePool) => {};
+const vertical = (gamePool) => {
+  for (let x = 0; x <= 6; x++) {
+    for (let y = 0; y < 3; y++) {
+      let result = isAllSameColor(
+        gamePool[y][x].color,
+        gamePool[y + 1][x].color,
+        gamePool[y + 2][x].color,
+        gamePool[y + 3][x].color
+      );
+      if (result) {
+        return result;
+      }
+    }
+  }
+};
 const diagonally = (gamePool) => {};
 const checkPool = (gamePool) => {
-  if (horizontal(gamePool) || diagonally(gamePool) || vertical(gamePool)) {
-    alert(`победил ${horizontal(gamePool)}`);
+  if (horizontal(gamePool)) {
+    alert(`победил ${horizontal(gamePool)} horizontal`);
+  } else if (vertical(gamePool)) {
+    alert(`победил ${vertical(gamePool)} по vertical`);
   }
+  // else if (diagonally(gamePool)) {
+  //   alert(`победил ${diagonally(gamePool)} по diagonally`);
+  // }
 };
 
 function setColor(event: ICell) {
