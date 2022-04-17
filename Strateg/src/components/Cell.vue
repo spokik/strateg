@@ -11,7 +11,10 @@ function activeCell() {
 </script>
 
 <template>
-  <div class="cell" @click="activeCell"></div>
+  <div class="cell" @click="activeCell">
+    x - {{ cell.x }},<br />
+    y - {{ cell.y }}
+  </div>
 </template>
 
 <style lang="scss" scoped>
