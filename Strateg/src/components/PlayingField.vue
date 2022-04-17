@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, watch } from "vue";
 import { ICell } from "../models/ICell";
 import Cell from "./Cell.vue";
 
 type Pool = Array<Array<ICell>>;
 const props = defineProps<{ pool: Pool; player: string }>();
-const emit = defineEmits(["playerChange"]);
+const emit = defineEmits(["playerChange", "endGame"]);
 
 const isAllSameColor = (el0: string, el1: string, el2: string, el3: string) => {
   if ([el0, el1, el2, el3].includes("white")) {
@@ -20,6 +20,9 @@ const isAllSameColor = (el0: string, el1: string, el2: string, el3: string) => {
 };
 
 const gamePool = ref(props.pool);
+const resetGamePool = () => {
+  gamePool.value = props.pool;
+};
 
 const horizontal = (gamePool: Pool) => {
   for (let y = 0; y <= 5; y++) {
@@ -84,12 +87,20 @@ const diagonallyY = (gamePool: Pool) => {
 const checkPool = (gamePool: Pool) => {
   if (horizontal(gamePool)) {
     alert(`победил ${horizontal(gamePool)} horizontal`);
+    emit("endGame", horizontal(gamePool));
+    resetGamePool();
   } else if (vertical(gamePool)) {
     alert(`победил ${vertical(gamePool)} по vertical`);
+    emit("endGame", vertical(gamePool));
+    resetGamePool();
   } else if (diagonallyX(gamePool)) {
     alert(`победил ${diagonallyX(gamePool)} по diagonallyX`);
+    emit("endGame", diagonallyX(gamePool));
+    resetGamePool();
   } else if (diagonallyY(gamePool)) {
     alert(`победил ${diagonallyY(gamePool)} по diagonallyY`);
+    emit("endGame", diagonallyY(gamePool));
+    resetGamePool();
   }
 };
 

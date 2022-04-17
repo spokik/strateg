@@ -14,24 +14,34 @@ function genStartPool(collom: number = 7, line: number = 6) {
   }
   return startArr;
 }
-
-const pool = genStartPool();
+const wins = ref({ red: 0, yellow: 0 });
+const pool = ref(genStartPool());
 const isPlayerRed = ref<boolean>(true);
 const player = ref("red");
 function playerChange() {
   isPlayerRed.value = !isPlayerRed.value;
   isPlayerRed.value ? (player.value = "red") : (player.value = "yellow");
 }
+const endGame = (event: string) => {
+  if (event === "red") {
+    wins.value.red++;
+  } else {
+    wins.value.yellow++;
+  }
+  pool.value = genStartPool();
+};
 </script>
 
 <template>
   <div class="wrapper">
+    Победы: Красный: {{ wins.red }} Желтый: {{ wins.yellow }}
     <div>Сейчас ходит : {{ player }}</div>
 
     <PlayingFieldVue
       :pool="pool"
       :player="player"
       @player-change="playerChange"
+      @end-game="endGame"
     />
   </div>
 </template>
