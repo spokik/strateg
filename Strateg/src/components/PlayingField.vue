@@ -19,6 +19,28 @@ const isAllSameColor = (el0, el1, el2, el3) => {
 };
 
 const gamePool = ref(props.pool);
+const horizontal = (gamePool) => {
+  for (let i = 0; i <= 5; i++) {
+    for (let x = 0; x < 4; x++) {
+      let result = isAllSameColor(
+        gamePool[i][x].color,
+        gamePool[i][x + 1].color,
+        gamePool[i][x + 2].color,
+        gamePool[i][x + 3].color
+      );
+      if (result) {
+        return result;
+      }
+    }
+  }
+};
+const vertical = (gamePool) => {};
+const diagonally = (gamePool) => {};
+const checkPool = (gamePool) => {
+  if (horizontal(gamePool) || diagonally(gamePool) || vertical(gamePool)) {
+    alert(`победил ${horizontal(gamePool)}`);
+  }
+};
 
 const horizontal = (gamePool) => {
   for (let y = 0; y <= 5; y++) {
