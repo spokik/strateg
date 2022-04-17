@@ -11,7 +11,7 @@ function activeCell() {
 </script>
 
 <template>
-  <div class="cell" @click="activeCell">
+  <div class="cell" :class="{ cell_active: cell.active }" @click="activeCell">
     <!-- x - {{ cell.x }},<br />
     y - {{ cell.y }} -->
   </div>
@@ -23,5 +23,8 @@ function activeCell() {
   width: 100%;
   height: 100%;
   background-color: v-bind("color");
+  &_active {
+    box-shadow: 0px 0px 1px 3px rgb(7, 236, 7) inset;
+  }
 }
 </style>

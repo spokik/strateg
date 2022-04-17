@@ -24,21 +24,32 @@ function playerChange() {
   isPlayerRed.value = !isPlayerRed.value;
   isPlayerRed.value ? (player.value = "red") : (player.value = "yellow");
 }
-const endGame = (event: [string, string, Array<Array<number>>]) => {
+
+const setActiveCell = (coord: [[number, number]], pool: Pool): Pool => {
+  const poolWithActie = pool;
+  for (let i = 0; i <= 3; i++) {
+    poolWithActie[coord[i][1]][coord[i][0]].active = true;
+  }
+  return poolWithActie;
+};
+
+const endGame = (event: [string, string, [[number, number]]]) => {
   if (event[0] === "red") {
     wins.value.red++;
-    console.log(`победил ${event[0]} по ${event[1]}`);
+
     isPlayerRed.value = false;
     playerChange();
   } else {
     wins.value.yellow++;
-    console.log(`победил ${event[0]} по ${event[1]}`);
+
     isPlayerRed.value = true;
     playerChange();
   }
+  console.log(`победил ${event[0]} по ${event[1]}`);
+  pool.value = setActiveCell(event[2], pool.value);
   gameCounter.value++;
   clearPool.value = !clearPool;
-  pool.value = genStartPool();
+  // pool.value = genStartPool();
 };
 </script>
 
