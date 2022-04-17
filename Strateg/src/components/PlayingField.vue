@@ -3,10 +3,11 @@ import { ref, computed } from "vue";
 import { ICell } from "../models/ICell";
 import Cell from "./Cell.vue";
 
-const props = defineProps<{ pool: Array<Array<ICell>>; player: string }>();
+type Pool = Array<Array<ICell>>;
+const props = defineProps<{ pool: Pool; player: string }>();
 const emit = defineEmits(["playerChange"]);
 
-const isAllSameColor = (el0, el1, el2, el3) => {
+const isAllSameColor = (el0: string, el1: string, el2: string, el3: string) => {
   if ([el0, el1, el2, el3].includes("white")) {
     return false;
   } else {
@@ -19,30 +20,8 @@ const isAllSameColor = (el0, el1, el2, el3) => {
 };
 
 const gamePool = ref(props.pool);
-const horizontal = (gamePool) => {
-  for (let i = 0; i <= 5; i++) {
-    for (let x = 0; x < 4; x++) {
-      let result = isAllSameColor(
-        gamePool[i][x].color,
-        gamePool[i][x + 1].color,
-        gamePool[i][x + 2].color,
-        gamePool[i][x + 3].color
-      );
-      if (result) {
-        return result;
-      }
-    }
-  }
-};
-const vertical = (gamePool) => {};
-const diagonally = (gamePool) => {};
-const checkPool = (gamePool) => {
-  if (horizontal(gamePool) || diagonally(gamePool) || vertical(gamePool)) {
-    alert(`победил ${horizontal(gamePool)}`);
-  }
-};
 
-const horizontal = (gamePool) => {
+const horizontal = (gamePool: Pool) => {
   for (let y = 0; y <= 5; y++) {
     for (let x = 0; x < 4; x++) {
       let result = isAllSameColor(
@@ -57,7 +36,7 @@ const horizontal = (gamePool) => {
     }
   }
 };
-const vertical = (gamePool) => {
+const vertical = (gamePool: Pool) => {
   for (let x = 0; x <= 6; x++) {
     for (let y = 0; y < 3; y++) {
       let result = isAllSameColor(
@@ -72,7 +51,7 @@ const vertical = (gamePool) => {
     }
   }
 };
-const diagonallyX = (gamePool) => {
+const diagonallyX = (gamePool: Pool) => {
   for (let x = 3; x <= 6; x++) {
     for (let y = 0; y < 3; y++) {
       let result = isAllSameColor(
@@ -87,7 +66,7 @@ const diagonallyX = (gamePool) => {
     }
   }
 };
-const diagonallyY = (gamePool) => {
+const diagonallyY = (gamePool: Pool) => {
   for (let x = 0; x <= 3; x++) {
     for (let y = 0; y < 3; y++) {
       let result = isAllSameColor(
@@ -102,7 +81,7 @@ const diagonallyY = (gamePool) => {
     }
   }
 };
-const checkPool = (gamePool) => {
+const checkPool = (gamePool: Pool) => {
   if (horizontal(gamePool)) {
     alert(`победил ${horizontal(gamePool)} horizontal`);
   } else if (vertical(gamePool)) {
